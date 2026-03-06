@@ -1,0 +1,35 @@
+# Milk and Water Jug Problem (BFS in C)
+
+## Problem
+You are given two jugs with capacities:
+- Jug A = 4 liters
+- Jug B = 3 liters
+
+Goal: Measure exactly **2 liters** using these jugs.
+
+Allowed operations:
+1. Fill a jug completely
+2. Empty a jug
+3. Pour water from one jug to another
+
+## Algorithm Used
+Breadth First Search (BFS)
+
+BFS explores all possible states level by level until the goal state is found.
+
+## State Representation
+Each state is represented as:
+
+(A, B)
+
+Where:
+A = current water in jug A  
+B = current water in jug B
+
+Example:
+(0,0) → both jugs empty
+
+## Compile
+
+```bash
+gcc milk_jug_bfs.c -o milk_jug
