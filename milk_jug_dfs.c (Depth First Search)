@@ -1,0 +1,74 @@
+#include <stdio.h>
+
+#define MAXA 5
+#define MAXB 5
+
+int visited[MAXA][MAXB];
+
+typedef struct {
+    int a;
+    int b;
+} State;
+
+State path[100];
+int pathIndex = 0;
+
+int capA = 4;
+int capB = 3;
+int goal = 2;
+
+void printPath() {
+    printf("Solution Path:\n");
+    for(int i = 0; i < pathIndex; i++) {
+        printf("(%d,%d)\n", path[i].a, path[i].b);
+    }
+}
+
+int dfs(int a, int b) {
+
+    if(visited[a][b])
+        return 0;
+
+    visited[a][b] = 1;
+
+    path[pathIndex].a = a;
+    path[pathIndex].b = b;
+    pathIndex++;
+
+    if(a == goal || b == goal) {
+        printPath();
+        return 1;
+    }
+
+    int pour;
+
+    // Fill Jug A
+    if(dfs(capA, b)) return 1;
+
+    // Fill Jug B
+    if(dfs(a, capB)) return 1;
+
+    // Empty Jug A
+    if(dfs(0, b)) return 1;
+
+    // Empty Jug B
+    if(dfs(a, 0)) return 1;
+
+    // Pour A -> B
+    pour = (capB - b < a) ? capB - b : a;
+    if(dfs(a - pour, b + pour)) return 1;
+
+    // Pour B -> A
+    pour = (capA - a < b) ? capA - a : b;
+    if(dfs(a + pour, b - pour)) return 1;
+
+    pathIndex--;
+    return 0;
+}
+
+int main() {
+
+    dfs(0,0);
+
+    return 0;
+}
